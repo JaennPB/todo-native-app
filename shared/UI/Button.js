@@ -6,7 +6,7 @@ import theme from '../theme/theme';
 const Button = (props) => {
   return (
     <Pressable onPress={props.pressed} style={styles.button}>
-      <Text>{props.children}</Text>
+      <Text style={styles.text}>{props.children}</Text>
     </Pressable>
   );
 };
@@ -14,6 +14,12 @@ const Button = (props) => {
 const styles = StyleSheet.create({
   button: {
     backgroundColor: theme.colorsLight.accent1,
+    paddingHorizontal: theme.margins.paddingH,
+    paddingVertical: theme.margins.paddingV,
+    borderRadius: theme.margins.borderRadius,
+  },
+  text: {
+    color: 'white',
   },
 });
 

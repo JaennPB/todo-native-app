@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import theme from '../theme/theme';
 
-const mainApp = () => {
+const mainApp = (props) => {
+  const { navigation } = props;
+  useEffect(() => {
+    navigation.addListener('beforeRemove', (e) => {
+      e.preventDefault();
+    });
+  }, [navigation]);
+
   return (
     <View style={styles.main}>
       <Text>Main</Text>
