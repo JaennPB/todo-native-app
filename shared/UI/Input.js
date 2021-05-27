@@ -6,7 +6,11 @@ const Input = (props) => {
   return (
     <>
       <Text>{props.label}</Text>
-      <TextInput style={styles.input} />
+      <TextInput
+        style={styles.input}
+        onChangeText={props.onChangeText}
+        value={props.value}
+      />
     </>
   );
 };

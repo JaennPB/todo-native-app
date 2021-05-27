@@ -1,24 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
+import { useDispatch } from 'react-redux';
 
 import Button from '../UI/Button';
 import Input from '../UI/Input';
 import theme from '../theme/theme';
 
+import { setUsername } from '../../store/reducer';
+
 const WelcomeScreen = (props) => {
+  const dispatch = useDispatch();
+  const [user, setUser] = useState('');
+
+  const startApp = () => {
+    dispatch(setUsername(user));
+    props.navigation.navigate('mainApp');
+  };
+
   return (
     <View style={styles.container}>
       <Text>Welcome</Text>
-      <Input label="How should I call you?" />
+      <Input
+        label="How should I call you?"
+        onChangeText={(value) => setUser(value)}
+        value={user}
+      />
       <Text>Select theme:</Text>
       <View style={styles.themeContainer}>
         <Button>Dark</Button>
         <Button>Light</Button>
       </View>
-      <Button
-        title="begin"
-        pressed={() => props.navigation.navigate('mainApp')}
-      >
+      <Button title="begin" pressed={startApp}>
         Begin
       </Button>
     </View>
