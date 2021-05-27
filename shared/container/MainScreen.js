@@ -8,20 +8,23 @@ import {
   StatusBar,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment';
 
 import TodoItem from '../components/TodoItem';
 import theme from '../theme/theme';
 import AddItemButton from '../UI/addItemButton';
 
-import { addTodo } from '../../store/reducer';
+import { addingToggle, addTodo, deleteTodo } from '../../store/reducer';
 import Input from '../UI/Input';
+import Button from '../UI/Button';
 
-// =================================================================================
+// ========================================== =======================================
 
 const mainApp = (props) => {
   const dispatch = useDispatch();
-  const todosArray = useSelector((state) => state.todos);
   const username = useSelector((state) => state.user);
+  const isAdding = useSelector((state) => state.adding);
+  const todosArray = useSelector((state) => state.todos);
 
   const [newTodo, setNewTodo] = useState('');
 
@@ -33,12 +36,28 @@ const mainApp = (props) => {
     });
   }, [navigation]);
 
-  const todos = todosArray.map((item) => <TodoItem title={item} key={item} />);
+  const toggleAddTodo = () => {
+    dispatch(addingToggle());
+  };
 
   const addTodoHandler = () => {
     dispatch(addTodo(newTodo));
+    dispatch(addingToggle());
     setNewTodo('');
   };
+
+  const DeleteItemHandler = (id) => {
+    dispatch(deleteTodo(id));
+  };
+
+  const todos = todosArray.map((item, index) => (
+    <TodoItem
+      title={item}
+      key={item}
+      onDelete={() => DeleteItemHandler(index)}
+      onComplete={() => console.log('completed')}
+    />
+  ));
 
   return (
     <>
@@ -48,11 +67,22 @@ const mainApp = (props) => {
       />
       <SafeAreaView style={styles.main}>
         <Text>Welcome {username}</Text>
-        <View style={styles.allSection}>{todos}</View>
-        <View style={styles.buttonSection}>
-          <Input onChangeText={(value) => setNewTodo(value)} value={newTodo} />
-          <AddItemButton pressed={addTodoHandler} />
+        <Text>{moment().format('MMM Do YYYY')}</Text>
+        <View style={styles.allSection}>
+          {todos.length !== 0 ? todos : <Text>please add something to do</Text>}
         </View>
+        {isAdding ? (
+          <View style={styles.buttonSection}>
+            <Button pressed={toggleAddTodo}>Cancel</Button>
+            <Input
+              onChangeText={(value) => setNewTodo(value)}
+              value={newTodo}
+              autoFocus={isAdding}
+            />
+            <Button pressed={addTodoHandler}>Add</Button>
+          </View>
+        ) : null}
+        {isAdding ? null : <AddItemButton pressed={toggleAddTodo} />}
       </SafeAreaView>
     </>
   );
@@ -68,10 +98,16 @@ const styles = StyleSheet.create({
   },
   allSection: {
     backgroundColor: 'white',
-    width: '90%',
-    height: '80%',
+    width: '100%',
+    height: '60%',
+    paddingVertical: 20,
   },
   buttonSection: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
     paddingBottom: 20,
   },
 });

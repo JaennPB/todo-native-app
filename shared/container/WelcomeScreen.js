@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Alert } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import Button from '../UI/Button';
@@ -13,6 +13,10 @@ const WelcomeScreen = (props) => {
   const [user, setUser] = useState('');
 
   const startApp = () => {
+    if (!user) {
+      Alert.alert('Please add a name');
+      return;
+    }
     dispatch(setUsername(user));
     props.navigation.navigate('mainApp');
   };
