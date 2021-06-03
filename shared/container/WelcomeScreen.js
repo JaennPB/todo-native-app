@@ -23,19 +23,21 @@ const WelcomeScreen = (props) => {
 
   return (
     <View style={styles.container}>
-      <Text>Welcome</Text>
-      <Input
-        label="How should I call you?"
-        onChangeText={(value) => setUser(value)}
-        value={user}
-      />
-      <Text>Select theme:</Text>
-      <View style={styles.themeContainer}>
-        <Button>Dark</Button>
-        <Button>Light</Button>
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>Bienvenido a bordo!</Text>
+        <Text style={styles.description}>
+          Te ayudaremos a completar todas tus tareas.
+        </Text>
       </View>
-      <Button title="begin" pressed={startApp}>
-        Begin
+      <View style={styles.inputContainer}>
+        <Input
+          label="Como te puedo llamar?"
+          onChangeText={(value) => setUser(value)}
+          value={user}
+        />
+      </View>
+      <Button title="begin" pressed={startApp} isWelcomeButton>
+        Empezar
       </Button>
     </View>
   );
@@ -46,11 +48,22 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.colorsLight.primary,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 120,
   },
-  themeContainer: {
-    display: 'flex',
-    flexDirection: 'row',
+  titleContainer: {
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 30,
+  },
+  description: {
+    fontSize: 16,
+    color: 'black',
+  },
+  inputContainer: {
+    width: '100%',
+    alignItems: 'center',
   },
 });
 

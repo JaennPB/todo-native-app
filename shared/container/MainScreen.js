@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   Platform,
   StatusBar,
+  Alert,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
@@ -41,6 +42,10 @@ const mainApp = (props) => {
   };
 
   const addTodoHandler = () => {
+    if (!newTodo) {
+      Alert.alert('Please add something');
+      return;
+    }
     dispatch(addTodo(newTodo));
     dispatch(addingToggle());
     setNewTodo('');
@@ -78,6 +83,7 @@ const mainApp = (props) => {
               onChangeText={(value) => setNewTodo(value)}
               value={newTodo}
               autoFocus={isAdding}
+              isAddItemInput
             />
             <Button pressed={addTodoHandler}>Add</Button>
           </View>
@@ -97,7 +103,7 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : null,
   },
   allSection: {
-    backgroundColor: 'white',
+    backgroundColor: theme.colorsLight.inputField,
     width: '100%',
     height: '60%',
     paddingVertical: 20,
