@@ -1,12 +1,22 @@
 import React from 'react';
 import { Text, StyleSheet, Pressable, View } from 'react-native';
+
 import theme from '../theme/theme';
 
 const TodoItem = (props) => {
+  const textStyles = () => {
+    let textStyles = {};
+    if (props.isCompleted) {
+      textStyles = { textDecorationLine: 'line-through' };
+    } else {
+      textStyles = { textDecorationLine: 'none' };
+    }
+    return textStyles;
+  };
   return (
     <View style={styles.todoItem}>
       <Pressable onPress={props.onComplete} style={styles.complete}></Pressable>
-      <Text>{props.title}</Text>
+      <Text style={textStyles()}>{props.title}</Text>
       <Pressable onPress={props.onDelete} style={styles.delete}>
         <Text style={styles.textButton}>X</Text>
       </Pressable>
@@ -26,6 +36,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 5,
+  },
+  text: {
+    fontSize: 20,
   },
   delete: {
     backgroundColor: theme.colorsLight.accent1,

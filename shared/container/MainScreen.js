@@ -8,24 +8,30 @@ import {
   StatusBar,
   Alert,
 } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
+import { useDispatch, useSelector } from 'react-redux';
 
 import TodoItem from '../components/TodoItem';
 import theme from '../theme/theme';
 import AddItemButton from '../UI/addItemButton';
-
-import { addingToggle, addTodo, deleteTodo } from '../../store/reducer';
-import Input from '../UI/Input';
 import Button from '../UI/Button';
+import Input from '../UI/Input';
 
-// ========================================== =======================================
+import {
+  addingToggle,
+  addTodo,
+  deleteTodo,
+  completeTodo,
+} from '../../store/reducer';
+
+// =================================================================================
 
 const mainApp = (props) => {
   const dispatch = useDispatch();
   const username = useSelector((state) => state.user);
   const isAdding = useSelector((state) => state.adding);
   const todosArray = useSelector((state) => state.todos);
+  const completedTodosArray = useSelector((state) => state.completedTodos);
 
   const [newTodo, setNewTodo] = useState('');
 
@@ -51,16 +57,21 @@ const mainApp = (props) => {
     setNewTodo('');
   };
 
-  const DeleteItemHandler = (id) => {
+  const deleteItemHandler = (id) => {
     dispatch(deleteTodo(id));
+  };
+
+  const completeItemHandler = (id) => {
+    dispatch(completeTodo(id));
   };
 
   const todos = todosArray.map((item, index) => (
     <TodoItem
       title={item}
       key={item}
-      onDelete={() => DeleteItemHandler(index)}
-      onComplete={() => console.log('completed')}
+      onDelete={() => deleteItemHandler(index)}
+      onComplete={() => completeItemHandler(index)}
+      isCompleted={completedTodosArray.includes(item)}
     />
   ));
 
