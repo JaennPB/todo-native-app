@@ -21,6 +21,7 @@ const Input = (props) => {
         onChangeText={props.onChangeText}
         value={props.value}
         autoFocus={props.autoFocus}
+        autoCapitalize="sentences"
       />
     </>
   );
@@ -32,10 +33,10 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   input: {
-    backgroundColor: theme.colorsLight.inputField,
+    borderRadius: theme.margins.borderRadius,
+    backgroundColor: theme.colorsLight.secondary,
     paddingHorizontal: 20,
     paddingVertical: 10,
-    borderRadius: theme.margins.borderRadius,
     width: '70%',
   },
 });

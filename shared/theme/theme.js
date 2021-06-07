@@ -1,8 +1,9 @@
 const theme = {
   colorsLight: {
-    primary: '#B5E48C',
-    accent1: '#76C893',
-    inputField: '#CAECAC',
+    primary: '#99D98C',
+    secondary: '#BBE6B3',
+    accent1: '#52B69A',
+    accent2: '#168AAD',
   },
   margins: {
     paddingH: 20,

@@ -13,7 +13,7 @@ const AddItemButton = (props) => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: theme.colorsLight.accent1,
+    backgroundColor: theme.colorsLight.accent2,
     borderRadius: theme.margins.borderRadius,
     width: 40,
     height: 40,

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, Alert } from 'react-native';
+import { Text, View, StyleSheet, Alert, StatusBar } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import Button from '../UI/Button';
@@ -22,24 +22,30 @@ const WelcomeScreen = (props) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}>Bienvenido a bordo!</Text>
-        <Text style={styles.description}>
-          Te ayudaremos a completar todas tus tareas.
-        </Text>
+    <>
+      <StatusBar
+        backgroundColor={theme.colorsLight.secondary}
+        barStyle="dark-content"
+      />
+      <View style={styles.container}>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>Bienvenido a bordo!</Text>
+          <Text style={styles.description}>
+            Te ayudaremos a completar todas tus tareas.
+          </Text>
+        </View>
+        <View style={styles.inputContainer}>
+          <Input
+            label="Como te puedo llamar?"
+            onChangeText={(value) => setUser(value)}
+            value={user}
+          />
+        </View>
+        <Button title="begin" pressed={startApp} isWelcomeButton>
+          Empezar
+        </Button>
       </View>
-      <View style={styles.inputContainer}>
-        <Input
-          label="Como te puedo llamar?"
-          onChangeText={(value) => setUser(value)}
-          value={user}
-        />
-      </View>
-      <Button title="begin" pressed={startApp} isWelcomeButton>
-        Empezar
-      </Button>
-    </View>
+    </>
   );
 };
 

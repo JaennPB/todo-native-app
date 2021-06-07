@@ -22,6 +22,7 @@ import {
   addTodo,
   deleteTodo,
   completeTodo,
+  incompleteTodo,
 } from '../../store/reducer';
 
 // =================================================================================
@@ -51,26 +52,37 @@ const mainApp = (props) => {
     if (!newTodo) {
       Alert.alert('Please add something');
       return;
+    } else if (todosArray.includes(newTodo)) {
+      Alert.alert('Todo already added!');
+      setNewTodo('');
+      return;
     }
+
     dispatch(addTodo(newTodo));
     dispatch(addingToggle());
     setNewTodo('');
   };
 
-  const deleteItemHandler = (id) => {
-    dispatch(deleteTodo(id));
+  const deleteItemHandler = (item) => {
+    dispatch(deleteTodo(item));
   };
 
-  const completeItemHandler = (id) => {
-    dispatch(completeTodo(id));
+  const toggleCompleteHandler = (item) => {
+    if (completedTodosArray.includes(item)) {
+      dispatch(incompleteTodo(item));
+      console.log('incomplete');
+    } else {
+      dispatch(completeTodo(item));
+      console.log('complete');
+    }
   };
 
   const todos = todosArray.map((item, index) => (
     <TodoItem
       title={item}
       key={item}
-      onDelete={() => deleteItemHandler(index)}
-      onComplete={() => completeItemHandler(index)}
+      onDelete={() => deleteItemHandler(item)}
+      onToggleComplete={() => toggleCompleteHandler(item)}
       isCompleted={completedTodosArray.includes(item)}
     />
   ));
@@ -78,14 +90,14 @@ const mainApp = (props) => {
   return (
     <>
       <StatusBar
-        backgroundColor={theme.colorsLight.primary}
+        backgroundColor={theme.colorsLight.secondary}
         barStyle="dark-content"
       />
       <SafeAreaView style={styles.main}>
         <Text>Welcome {username}</Text>
         <Text>{moment().format('MMM Do YYYY')}</Text>
         <View style={styles.allSection}>
-          {todos.length !== 0 ? todos : <Text>please add something to do</Text>}
+          {todos.length !== 0 ? todos : <Text>Please add something to-do</Text>}
         </View>
         {isAdding ? (
           <View style={styles.buttonSection}>
@@ -107,17 +119,20 @@ const mainApp = (props) => {
 
 const styles = StyleSheet.create({
   main: {
-    flex: 1,
     backgroundColor: theme.colorsLight.primary,
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : null,
+    paddingBottom: 10,
   },
   allSection: {
-    backgroundColor: theme.colorsLight.inputField,
+    backgroundColor: theme.colorsLight.secondary,
     width: '100%',
     height: '60%',
-    paddingVertical: 20,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    alignItems: 'center',
   },
   buttonSection: {
     display: 'flex',

@@ -5,6 +5,7 @@ export const addingToggle = createAction('todo/addingToggle');
 export const addTodo = createAction('todo/addTodo');
 export const deleteTodo = createAction('todo/deleteTodo');
 export const completeTodo = createAction('todo/completeTodo');
+export const incompleteTodo = createAction('todo/incompleteTodo');
 
 const initialState = {
   user: '',
@@ -14,7 +15,7 @@ const initialState = {
 };
 
 const reducer = createReducer(initialState, (builder) => {
-  builder.addCase(addingToggle, (state, action) => {
+  builder.addCase(addingToggle, (state) => {
     state.adding = !state.adding;
   });
   builder.addCase(setUsername, (state, action) => {
@@ -24,13 +25,19 @@ const reducer = createReducer(initialState, (builder) => {
     state.todos.push(action.payload);
   });
   builder.addCase(deleteTodo, (state, action) => {
-    state.todos = state.todos.filter((_, index) => index !== action.payload);
+    state.todos = state.todos.filter((item) => item !== action.payload);
+    state.completedTodos = state.completedTodos.filter(
+      (item) => item !== action.payload
+    );
   });
   builder.addCase(completeTodo, (state, action) => {
-    const [completedItem] = state.todos.filter(
-      (_, index) => index === action.payload
-    );
+    const completedItem = state.todos.find((item) => item === action.payload);
     state.completedTodos.push(completedItem);
+  });
+  builder.addCase(incompleteTodo, (state, action) => {
+    state.completedTodos = state.completedTodos.filter(
+      (item) => item !== action.payload
+    );
   });
 });
 

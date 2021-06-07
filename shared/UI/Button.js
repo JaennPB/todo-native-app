@@ -26,7 +26,7 @@ const Button = (props) => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: theme.colorsLight.accent1,
+    backgroundColor: theme.colorsLight.accent2,
     paddingHorizontal: theme.margins.paddingH,
     paddingVertical: theme.margins.paddingV,
     borderRadius: theme.margins.borderRadius,
