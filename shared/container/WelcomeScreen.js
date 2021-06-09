@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, StyleSheet, Alert, StatusBar } from 'react-native';
+import { Text, View, StyleSheet, Alert } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 import Button from '../UI/Button';
@@ -23,10 +23,6 @@ const WelcomeScreen = (props) => {
 
   return (
     <>
-      <StatusBar
-        backgroundColor={theme.colorsLight.secondary}
-        barStyle="dark-content"
-      />
       <View style={styles.container}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Bienvenido a bordo!</Text>

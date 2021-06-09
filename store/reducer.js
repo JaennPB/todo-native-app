@@ -22,7 +22,7 @@ const reducer = createReducer(initialState, (builder) => {
     state.user = action.payload;
   });
   builder.addCase(addTodo, (state, action) => {
-    state.todos.push(action.payload);
+    state.todos.unshift(action.payload);
   });
   builder.addCase(deleteTodo, (state, action) => {
     state.todos = state.todos.filter((item) => item !== action.payload);
@@ -32,9 +32,12 @@ const reducer = createReducer(initialState, (builder) => {
   });
   builder.addCase(completeTodo, (state, action) => {
     const completedItem = state.todos.find((item) => item === action.payload);
-    state.completedTodos.push(completedItem);
+    state.completedTodos.unshift(completedItem);
+    state.todos = state.todos.filter((item) => item !== action.payload);
   });
   builder.addCase(incompleteTodo, (state, action) => {
+    const item = state.completedTodos.find((item) => item === action.payload);
+    state.todos.push(item);
     state.completedTodos = state.completedTodos.filter(
       (item) => item !== action.payload
     );

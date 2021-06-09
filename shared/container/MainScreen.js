@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   Text,
   View,
@@ -6,36 +6,22 @@ import {
   SafeAreaView,
   Platform,
   StatusBar,
-  Alert,
 } from 'react-native';
-import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 
 import TodoItem from '../components/TodoItem';
+import MainDashboard from '../components/mainDashboard';
+import AddTodoSection from '../components/addTodoSection';
 import theme from '../theme/theme';
-import AddItemButton from '../UI/addItemButton';
-import Button from '../UI/Button';
-import Input from '../UI/Input';
 
-import {
-  addingToggle,
-  addTodo,
-  deleteTodo,
-  completeTodo,
-  incompleteTodo,
-} from '../../store/reducer';
-import { TextInput } from 'react-native-gesture-handler';
+import { deleteTodo, completeTodo, incompleteTodo } from '../../store/reducer';
 
 // =================================================================================
 
 const mainApp = (props) => {
   const dispatch = useDispatch();
-  const username = useSelector((state) => state.user);
-  const isAdding = useSelector((state) => state.adding);
   const todosArray = useSelector((state) => state.todos);
   const completedTodosArray = useSelector((state) => state.completedTodos);
-
-  const [newTodo, setNewTodo] = useState('');
 
   const { navigation } = props;
 
@@ -45,25 +31,6 @@ const mainApp = (props) => {
     });
   }, [navigation]);
 
-  const toggleAddTodo = () => {
-    dispatch(addingToggle());
-  };
-
-  const addTodoHandler = () => {
-    if (!newTodo) {
-      Alert.alert('Please add something');
-      return;
-    } else if (todosArray.includes(newTodo)) {
-      Alert.alert('Todo already added!');
-      setNewTodo('');
-      return;
-    }
-
-    dispatch(addTodo(newTodo));
-    dispatch(addingToggle());
-    setNewTodo('');
-  };
-
   const deleteItemHandler = (item) => {
     dispatch(deleteTodo(item));
   };
@@ -71,10 +38,8 @@ const mainApp = (props) => {
   const toggleCompleteHandler = (item) => {
     if (completedTodosArray.includes(item)) {
       dispatch(incompleteTodo(item));
-      console.log('incomplete');
     } else {
       dispatch(completeTodo(item));
-      console.log('complete');
     }
   };
 
@@ -100,17 +65,12 @@ const mainApp = (props) => {
 
   return (
     <>
-      <StatusBar
-        backgroundColor={theme.colorsLight.secondary}
-        barStyle="dark-content"
-      />
       <SafeAreaView style={styles.main}>
-        <Text>Welcome {username}</Text>
-        <Text>{moment().format('MMM Do YYYY')}</Text>
+        <MainDashboard />
         <View style={styles.todosSection}>
           {todosArray.length > 0 ? (
             <View style={styles.tasksContainer}>
-              <Text>Tasks</Text>
+              <Text style={styles.tasksTitle}>Tasks</Text>
               {todos}
             </View>
           ) : (
@@ -118,24 +78,12 @@ const mainApp = (props) => {
           )}
           {completedTodosArray.length > 0 ? (
             <View style={styles.completedContainer}>
-              <Text>Completed</Text>
+              <Text style={styles.completedTitle}>Completed</Text>
               {completedTodos}
             </View>
           ) : null}
         </View>
-        {isAdding ? (
-          <View style={styles.buttonSection}>
-            <Button pressed={toggleAddTodo}>Cancel</Button>
-            <Input
-              onChangeText={(value) => setNewTodo(value)}
-              value={newTodo}
-              autoFocus={isAdding}
-              isAddItemInput
-            />
-            <Button pressed={addTodoHandler}>Add</Button>
-          </View>
-        ) : null}
-        {isAdding ? null : <AddItemButton pressed={toggleAddTodo} />}
+        <AddTodoSection />
       </SafeAreaView>
     </>
   );
@@ -144,7 +92,9 @@ const mainApp = (props) => {
 const defaultContainerStyles = StyleSheet.create({
   container: {
     width: '100%',
-    alignItems: 'center',
+  },
+  title: {
+    marginBottom: 10,
   },
 });
 
@@ -164,21 +114,21 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 10,
   },
+  tasksTitle: {
+    ...defaultContainerStyles.title,
+  },
+  completedTitle: {
+    ...defaultContainerStyles.title,
+    marginTop: 10,
+  },
   tasksContainer: {
     ...defaultContainerStyles.container,
-    backgroundColor: 'red',
   },
   completedContainer: {
     ...defaultContainerStyles.container,
-    backgroundColor: 'blue',
-  },
-  buttonSection: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    paddingBottom: 20,
+    borderTopColor: 'white',
+    borderTopWidth: 1,
+    marginTop: 10,
   },
 });
 

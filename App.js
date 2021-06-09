@@ -13,22 +13,29 @@ const Stack = createStackNavigator();
 
 const App = () => {
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="welcomeScreen">
-          <Stack.Screen
-            name="welcomeScreen"
-            component={WelcomeScreen}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="mainApp"
-            component={MainApp}
-            options={{ headerShown: false }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </Provider>
+    <>
+      <StatusBar
+        backgroundColor={theme.colorsLight.secondary}
+        barStyle="dark-content"
+      />
+
+      <Provider store={store}>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="welcomeScreen">
+            <Stack.Screen
+              name="welcomeScreen"
+              component={WelcomeScreen}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="mainApp"
+              component={MainApp}
+              options={{ headerShown: false }}
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Provider>
+    </>
   );
 };
 
