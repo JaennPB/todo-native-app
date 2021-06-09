@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#fff',
     width: '100%',
     marginHorizontal: 20,
     marginVertical: 5,
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    fontSize: 18,
+    fontSize: 15,
   },
   delete: {
     backgroundColor: theme.colorsLight.accent1,

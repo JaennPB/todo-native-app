@@ -24,6 +24,7 @@ import {
   completeTodo,
   incompleteTodo,
 } from '../../store/reducer';
+import { TextInput } from 'react-native-gesture-handler';
 
 // =================================================================================
 
@@ -87,6 +88,16 @@ const mainApp = (props) => {
     />
   ));
 
+  const completedTodos = completedTodosArray.map((item, index) => (
+    <TodoItem
+      title={item}
+      key={item}
+      onDelete={() => deleteItemHandler(item)}
+      onToggleComplete={() => toggleCompleteHandler(item)}
+      isCompleted={completedTodosArray.includes(item)}
+    />
+  ));
+
   return (
     <>
       <StatusBar
@@ -96,8 +107,21 @@ const mainApp = (props) => {
       <SafeAreaView style={styles.main}>
         <Text>Welcome {username}</Text>
         <Text>{moment().format('MMM Do YYYY')}</Text>
-        <View style={styles.allSection}>
-          {todos.length !== 0 ? todos : <Text>Please add something to-do</Text>}
+        <View style={styles.todosSection}>
+          {todosArray.length > 0 ? (
+            <View style={styles.tasksContainer}>
+              <Text>Tasks</Text>
+              {todos}
+            </View>
+          ) : (
+            <Text>Add Tasks</Text>
+          )}
+          {completedTodosArray.length > 0 ? (
+            <View style={styles.completedContainer}>
+              <Text>Completed</Text>
+              {completedTodos}
+            </View>
+          ) : null}
         </View>
         {isAdding ? (
           <View style={styles.buttonSection}>
@@ -117,6 +141,13 @@ const mainApp = (props) => {
   );
 };
 
+const defaultContainerStyles = StyleSheet.create({
+  container: {
+    width: '100%',
+    alignItems: 'center',
+  },
+});
+
 const styles = StyleSheet.create({
   main: {
     backgroundColor: theme.colorsLight.primary,
@@ -126,13 +157,20 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : null,
     paddingBottom: 10,
   },
-  allSection: {
+  todosSection: {
     backgroundColor: theme.colorsLight.secondary,
     width: '100%',
-    height: '60%',
+    height: '65%',
     paddingVertical: 10,
     paddingHorizontal: 10,
-    alignItems: 'center',
+  },
+  tasksContainer: {
+    ...defaultContainerStyles.container,
+    backgroundColor: 'red',
+  },
+  completedContainer: {
+    ...defaultContainerStyles.container,
+    backgroundColor: 'blue',
   },
   buttonSection: {
     display: 'flex',
