@@ -25,20 +25,20 @@ const WelcomeScreen = (props) => {
     <>
       <View style={styles.container}>
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>Bienvenido a bordo!</Text>
+          <Text style={styles.title}>Welcome!</Text>
           <Text style={styles.description}>
-            Te ayudaremos a completar todas tus tareas.
+            We will help you complete all your tasks.
           </Text>
         </View>
         <View style={styles.inputContainer}>
           <Input
-            label="Como te puedo llamar?"
+            label="What is your name?"
             onChangeText={(value) => setUser(value)}
             value={user}
           />
         </View>
         <Button title="begin" pressed={startApp} isWelcomeButton>
-          Empezar
+          Let's go
         </Button>
       </View>
     </>

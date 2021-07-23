@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   todosSection: {
     backgroundColor: theme.colorsLight.secondary,
     width: '100%',
-    height: '65%',
+    height: '75%',
     paddingVertical: 10,
     paddingHorizontal: 10,
   },

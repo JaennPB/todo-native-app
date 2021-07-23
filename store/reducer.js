@@ -15,11 +15,11 @@ const initialState = {
 };
 
 const reducer = createReducer(initialState, (builder) => {
-  builder.addCase(addingToggle, (state) => {
-    state.adding = !state.adding;
-  });
   builder.addCase(setUsername, (state, action) => {
     state.user = action.payload;
+  });
+  builder.addCase(addingToggle, (state) => {
+    state.adding = !state.adding;
   });
   builder.addCase(addTodo, (state, action) => {
     state.todos.unshift(action.payload);

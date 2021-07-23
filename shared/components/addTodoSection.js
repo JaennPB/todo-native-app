@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { useSelector, dispatch, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Button from '../UI/Button';
 import Input from '../UI/Input';
 import AddItemButton from '../UI/addItemButton';
 
-import { addingToggle, addTodo } from '../../store/reducer';
+import { addTodo, addingToggle } from '../../store/reducer';
 
 const addTodoSection = (props) => {
   const dispatch = useDispatch();
@@ -14,10 +14,6 @@ const addTodoSection = (props) => {
   const todosArray = useSelector((state) => state.todos);
 
   const [newTodo, setNewTodo] = useState('');
-
-  const toggleAddTodo = () => {
-    dispatch(addingToggle());
-  };
 
   const addTodoHandler = () => {
     if (!newTodo) {
@@ -32,6 +28,10 @@ const addTodoSection = (props) => {
     dispatch(addTodo(newTodo));
     dispatch(addingToggle());
     setNewTodo('');
+  };
+
+  const toggleAddTodo = () => {
+    dispatch(addingToggle());
   };
 
   return (
@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
+    height: '100%',
     paddingBottom: 20,
   },
 });
